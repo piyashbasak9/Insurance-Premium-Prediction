@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - Insurance Premium Prediction{% endblock %}
+
+{% block body %}
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <h1 class="display-4 fw-bold">Predict Your Insurance Costs in Seconds</h1>
+        <p class="lead fs-4">
+          Use our advanced machine learning model to receive an instant, unbiased estimate of your insurance premium.
+        </p>
+
+        {% if user.is_authenticated %}
+          <a class="btn btn-primary btn-lg mt-3" href="{% url 'prediction' %}" role="button">
+            Get Your Free Estimate &raquo;
+          </a>
+        {% else %}
+          <a class="btn btn-primary btn-lg mt-3" href="{% url 'login' %}?next={% url 'prediction' %}" role="button">
+            Login to Get Your Estimate &raquo;
+          </a>
+        {% endif %}
+        </div>
+      <div class="col-md-5 text-center mt-4 mt-md-0">
+        
+        <!-- <img src="http://googleusercontent.com/image_collection/image_retrieval/10895522907560940334_0" alt="Insurance Analytics Dashboard" class="img-fluid rounded-3 shadow-sm"> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-4 py-5" id="how-it-works">
+    <h2 class="pb-2 border-bottom text-center">How It Works</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="col text-center">
+        <div class="icon-square bg-primary text-white d-inline-flex align-items-center justify-content-center fs-2 mb-3 rounded-3" style="width: 60px; height: 60px;">
+          <strong>1</strong>
+        </div>
+        <h3 class="fw-semibold">Provide Your Details</h3>
+        <p>Enter a few key factors like your age, BMI, smoking status, and region. All data is anonymized.</p>
+      </div>
+      <div class="col text-center">
+        <div class="icon-square bg-primary text-white d-inline-flex align-items-center justify-content-center fs-2 mb-3 rounded-3" style="width: 60px; height: 60px;">
+          <strong>2</strong>
+        </div>
+        <h3 class="fw-semibold">Our Model Analyzes</h3>
+        <p>Our trained ML model compares your information against thousands of data points to find complex patterns.</p>
+      </div>
+      <div class="col text-center">
+        <div class="icon-square bg-primary text-white d-inline-flex align-items-center justify-content-center fs-2 mb-3 rounded-3" style="width: 60px; height: 60px;">
+          <strong>3</strong>
+        </div>
+        <h3 class="fw-semibold">Get Your Estimate</h3>
+        <p>Receive an instant, easy-to-understand premium estimate to help you budget and plan for the future.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 py-5">
+    <h2 class="pb-2 border-bottom text-center">A Tool You Can Trust</h2>
+    <div class="col-md-4">
+      <div class="card h-100 p-3">
+        <div class="card-body">
+          <h4 class="card-title text-warning">Secure & Private</h4>
+          <p class="card-text">We value your privacy. We do not store or share any personal identifying information. Your session data is anonymous and temporary.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 p-3">
+        <div class="card-body">
+          <h4 class="card-title text-warning">Transparent Technology</h4>
+          <p class="card-text">Our tool is built using interpretable machine learning models. We're not a "black box" — we focus on models that are understood and verifiable.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 p-3">
+        <div class="card-body">
+          <h4 class="card-title text-warning">For Educational Use</h4>
+          <p class="card-text">Our estimates are for informational and planning purposes only. They provide a powerful baseline, but are not a formal quote from an insurer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center p-4 mt-4 bg-dark border border-secondary rounded-3">
+    <h2>Ready to See Your Estimate?</h2>
+    <p class="lead">It's fast, free, and secure. Get started now.</p>
+    
+    {% if user.is_authenticated %}
+      <a href="{% url 'prediction' %}" class="btn btn-primary btn-lg">
+        Try the Predictor
+      </a>
+    {% else %}
+      <a href="{% url 'login' %}?next={% url 'prediction' %}" class="btn btn-primary btn-lg">
+        Login to Try the Predictor
+      </a>
+    {% endif %}
+    </div>
+
+{% endblock %}

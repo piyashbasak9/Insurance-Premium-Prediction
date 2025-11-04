@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction - Insurance Premium Prediction{% endblock %}
+
+{% block body %}
+<div class="row g-5">
+
+  <div class="col-md-7">
+    <div class="card bg-body-tertiary p-4 p-md-5">
+      <div class="text-center mb-4">
+        <h1 class="h2 fw-bold">Insurance Premium Calculator</h1>
+        <p class="text-muted">Enter your details below to get an instant ML-powered estimate.</p>
+      </div>
+
+      <form method="POST" action="{% url 'prediction' %}" id="prediction-form">
+        {% csrf_token %}
+        <div class="row g-3">
+          
+          <div class="col-md-6">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" id="age" name="age" class="form-control" placeholder="e.g. 35" min="0" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="sex" class="form-label">Sex</label>
+            <select id="sex" name="sex" class="form-select" required>
+              <option value="">Choose...</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="bmi" class="form-label">BMI (Body Mass Index)</label>
+            <input type="number" step="0.1" id="bmi" name="bmi" class="form-control" placeholder="e.g. 22.5" 
+                   aria-describedby="bmiHelp" required>
+            <div id="bmiHelp" class="form-text">e.g., A BMI of 25.0 or more is overweight.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="children" class="form-label">Number of Children</label>
+            <input type="number" id="children" name="children" class="form-control" placeholder="0" min="0" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="smoker" class="form-label">Smoker</label>
+            <select id="smoker" name="smoker" class="form-select" required>
+              <option value="">Choose...</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="region" class="form-label">Region</label>
+            <select id="region" name="region" class="form-select" required>
+              <option value="">Choose...</option>
+              <option value="0">southwest</option>
+              <option value="1">southeast</option>
+              <option value="2">northwest</option>
+              <option value="3">northeast</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary btn-lg w-100" id="predictBtn">
+            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            <span class="btn-text">Predict Premium</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="sticky-top" style="top: 2rem;">
+      {% if output %}
+        <div class="card text-center border-success border-2 shadow-lg">
+          <div class="card-header bg-success text-white h5">
+            Prediction Result
+          </div>
+          <div class="card-body p-4">
+            <h5 class="card-title text-muted">Estimated Premium</h5>
+            <p class="display-5 fw-bold text-success-emphasis">
+              ${{ output }}
+            </p>
+            <p class="text-muted small">This is an estimate. Actual quotes may vary.</p>
+            <a href="{% url 'prediction' %}" class="btn btn-outline-secondary mt-3">Run a New Prediction</a>
+          </div>
+        </div>
+      {% else %}
+        <div class="card bg-body-tertiary border-dashed">
+          <div class="card-body text-center p-5">
+            
+            <h3 class="fw-semibold">Your Estimate</h3>
+            <p class="text-muted">
+              Your personalized insurance premium estimate will appear here once you fill out the form.
+            </p>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="alert alert-warning mt-4 small">
+        <strong>Disclaimer:</strong> This tool is for educational purposes only and is not a formal insurance quote.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block footer_js %}
+<script>
+  document.getElementById('prediction-form').addEventListener('submit', function() {
+    const btn = document.getElementById('predictBtn');
+    const spinner = btn.querySelector('.spinner-border');
+    const btnText = btn.querySelector('.btn-text');
+
+    // Disable button and show spinner
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+    if (btnText) {
+      btnText.innerText = 'Calculating...';
+    }
+  });
+</script>
+{% endblock %}

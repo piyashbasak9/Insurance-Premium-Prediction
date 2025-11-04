@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Insurance Premium Prediction{% endblock %}
+
+{% block body %}
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">About Our Prediction Engine</h1>
+      <p class="col-md-8 fs-4">
+        We use machine learning to bring transparency to insurance pricing, helping you understand your potential costs before you buy.
+      </p>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    
+    <div class="col-md-7">
+      <h2><span class="text-warning">How</span> It Works</h2>
+      <p>Our tool isn't a crystal ball, but it's the next best thing. We've trained a sophisticated machine learning model on thousands of anonymized data points from real-world insurance cases.</p>
+      <p>The model learns the complex patterns between key life factors and the final premium cost. When you enter your details, our system compares your profile to these learned patterns to generate a highly-educated estimate.</p>
+      <p>This gives you a powerful, data-driven starting point for your financial planning.</p>
+    </div>
+
+    <div class="col-md-5">
+      <h3>Key Prediction Factors</h3>
+      <p>Our model considers the most significant factors that insurers use:</p>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Age:</strong> A primary factor in premium calculation.</li>
+        <li class="list-group-item"><strong>BMI (Body Mass Index):</strong> An indicator of health status.</li>
+        <li class="list-group-item"><strong>Smoker Status:</strong> A strong predictor of higher costs.</li>
+        <li class="list-group-item"><strong>Number of Children:</strong> Can affect family plan costs.</li>
+        <li class="list-group-item"><strong>Region:</strong> Location-based differences in healthcare costs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-warning mt-5" role="alert">
+    <h4 class="alert-heading">⚠️ Important Disclaimer</h4>
+    <p>This tool is for **educational and informational purposes only**. The predictions provided are estimates based on our model and are not a guaranteed quote.</p>
+    <hr>
+    <p class="mb-0">
+      Actual insurance premiums are determined by providers and may vary based on a full underwriting process, your medical history, and other factors not included here. We are not a licensed insurance provider.
+    </p>
+  </div>
+
+  <div class="text-center p-4 mt-5 bg-dark border border-secondary rounded-3">
+    <h2>Ready to See Your Estimate?</h2>
+    <p class="lead">Get an instant, data-driven prediction in under 30 seconds.</p>
+    
+    {% if user.is_authenticated %}
+      <a href="{% url 'prediction' %}" class="btn btn-primary btn-lg">
+        Try the Predictor Now
+      </a>
+    {% else %}
+      <a href="{% url 'login' %}?next={% url 'prediction' %}" class="btn btn-primary btn-lg">
+        Login to Try the Predictor
+      </a>
+    {% endif %}
+  </div>
+  {% endblock %}
